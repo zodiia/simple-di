@@ -1,0 +1,226 @@
+complexity:
+  TooManyFunctions:
+    active: false
+  LargeClass:
+    active: true
+    threshold: 400
+  CognitiveComplexMethod:
+    active: true
+    threshold: 16
+
+exceptions:
+  TooGenericExceptionThrown:
+    active: true
+  TooGenericExceptionCaught:
+    active: false
+  InstanceOfCheckForException:
+    active: true
+  ExceptionRaisedInUnexpectedLocation:
+    active: true
+  NotImplementedDeclaration:
+    active: true
+  PrintStackTrace:
+    active: true
+    excludes: [ '**/test/**' ]
+  ReturnFromFinally:
+    active: true
+
+performance:
+  SpreadOperator:
+    active: true
+  ArrayPrimitive:
+    active: true
+  ForEachOnRange:
+    active: true
+  UnnecessaryTemporaryInstantiation:
+    active: true
+
+style:
+  ClassOrdering:
+    active: true
+  CollapsibleIfStatements:
+    active: true
+  EqualsOnSignatureLine:
+    active: true
+  ExplicitCollectionElementAccessMethod:
+    active: true
+  ExplicitItLambdaParameter:
+    active: false
+  ExpressionBodySyntax:
+    active: true
+  ForbiddenVoid:
+    active: true
+  FunctionOnlyReturningConstant:
+    active: true
+  LoopWithTooManyJumpStatements:
+    maxJumpCount: 2
+  MaxLineLength:
+    maxLineLength: 160
+    excludeCommentStatements: true
+    excludeImportStatements: true
+    excludePackageStatements: true
+  MagicNumber:
+    ignorePropertyDeclaration: true
+    ignoreEnums: true
+    ignoreExtensionFunctions: false
+    ignoreRanges: true
+  MandatoryBracesIfStatements:
+    active: true
+  MandatoryBracesLoops:
+    active: true
+  MayBeConst:
+    active: true
+  NestedClassesVisibility:
+    active: true
+  NewLineAtEndOfFile:
+    active: true
+  NoTabs:
+    active: true
+  ObjectLiteralToLambda:
+    active: true
+  OptionalWhenBraces:
+    active: false
+  RedundantHigherOrderMapUsage:
+    active: true
+  RedundantVisibilityModifierRule:
+    active: true
+  ReturnCount:
+    active: false
+  SafeCast:
+    active: true
+  SpacingBetweenPackageAndImports:
+    active: true
+  TrailingWhitespace:
+    active: true
+  UnnecessaryAnnotationUseSiteTarget:
+    active: true
+  UnnecessaryApply:
+    active: true
+  UnnecessaryInheritance:
+    active: true
+  UnnecessaryLet:
+    active: true
+  UnnecessaryParentheses:
+    active: false
+  UseEmptyCounterpart:
+    active: true
+  UseCheckOrError:
+    active: false
+  UseRequire:
+    active: true
+  UseRequireNotNull:
+    active: true
+  VarCouldBeVal:
+    active: true
+  ForbiddenComment:
+    values:
+      - 'FIXME:'
+      - 'STOPSHIP:'
+  UnusedImports:
+    active: false
+
+build:
+  maxIssues: 0
+
+console-reports:
+  active: true
+
+output-reports:
+  active: true
+  exclude:
+    - 'XmlOutputReport'
+    - 'SarifOutputReport'
+
+potential-bugs:
+  Deprecation:
+    active: true
+  DontDowncastCollectionTypes:
+    active: true
+  DoubleMutabilityForCollection:
+    active: true
+  ExitOutsideMain:
+    active: true
+  ExplicitGarbageCollectionCall:
+    active: true
+  NullCheckOnMutableProperty:
+    active: true
+  NullableToStringCall:
+    active: true
+  UnnecessaryNotNullOperator:
+    active: true
+  UnnecessarySafeCall:
+    active: true
+  UnreachableCode:
+    active: true
+  UnsafeCallOnNullableType:
+    active: true
+  UnsafeCast:
+    active: true
+  UselessPostfixExpression:
+    active: true
+
+naming:
+  ClassNaming:
+    classPattern: "[A-Z][A-Za-z0-9]*"
+  ConstructorParameterNaming:
+    parameterPattern: "[a-z][a-z0-9]*([A-Z][a-z0-9]+)*"
+    privateParameterPattern: "_?[a-z][a-z0-9]*([A-Z][a-z0-9]+)*"
+  EnumNaming:
+    enumEntryPattern: "[A-Z][_A-Z0-9]*[A-Z0-9]"
+  FunctionNaming:
+    functionPattern: "[a-z][a-z0-9]*([A-Z][a-z0-9]+)*"
+    excludeClassPattern: "$.*Test^"
+  FunctionParameterNaming:
+    parameterPattern: "[a-z][a-z0-9]*([A-Z][a-z0-9]+)*"
+  LambdaParameterNaming:
+    parameterPattern: "[a-z][a-z0-9]*([A-Z][a-z0-9]+)*|_"
+    active: true
+  NoNameShadowing:
+    active: true
+  ObjectPropertyNaming:
+    constantPattern: "[A-Z][_A-Z0-9]*[A-Z0-9]"
+    privatePropertyPattern: "_?[A-Za-z][_A-Za-z0-9]*[A-Za-z0-9]"
+    propertyPattern: "[A-Za-z][_A-Za-z0-9]*[A-Za-z0-9]"
+  NonBooleanPropertyPrefixedWithIs:
+    active: true
+  TopLevelPropertyNaming:
+    constantPattern: "[A-Z][_A-Z0-9]*[A-Z0-9]"
+    propertyPattern: "[A-Za-z][_A-Za-z0-9]*[A-Za-z0-9]"
+    privatePropertyPattern: "_?[A-Za-z][_A-Za-z0-9]*[A-Za-z0-9]"
+  VariableMaxLength:
+    active: true
+    maximumVariableNameLength: 30
+  VariableMinLength:
+    active: true
+    minimumVariableNameLength: 2
+  VariableNaming:
+    variablePattern: "[a-z][a-z0-9]*([A-Z][a-z0-9]+)*"
+    privateVariablePattern: "_?[a-z][a-z0-9]*([A-Z][a-z0-9]+)*"
+
+coroutines:
+  GlobalCoroutineUsage:
+    active: true
+  RedundantSuspendModifier:
+    active: true
+  SuspendFunWithFlowReturnType:
+    active: true
+
+comments:
+  OutdatedDocumentation:
+    active: false
+
+formatting:
+  ChainWrapping:
+    active: false
+  FinalNewline:
+    active: false
+  ParameterListWrapping:
+    active: true
+  ArgumentListWrapping:
+    active: false
+  Indentation:
+    active: false
+  MaximumLineLength:
+    active: false
+  Wrapping:
+    active: false
