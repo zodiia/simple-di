@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.9.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    `maven-publish`
+    signing
 }
 
 group = "moe.zodiia"
@@ -29,6 +31,61 @@ dependencies {
     implementation(kotlin("reflect"))
 
     testImplementation(kotlin("test"))
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = rootProject.name
+            groupId = rootProject.group.toString()
+            version = rootProject.version.toString()
+
+            pom {
+                name.set("Simple DI")
+                description.set(rootProject.description)
+                url.set("https://github.com/zodiia/simple-di")
+
+                licenses {
+                    license {
+                        name.set("")
+                        url.set("")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/zodiia/simple-di.git")
+                    url.set("https://github.com/zodiia/simple-di")
+                }
+            }
+
+            from(components["java"])
+
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            val releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["mavenJava"])
 }
 
 tasks.test {
