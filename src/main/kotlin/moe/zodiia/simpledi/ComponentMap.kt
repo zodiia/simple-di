@@ -44,7 +44,7 @@ class ComponentMap {
                 }
             }?.let { return it.instance as T }
         }
-        return newInstanceOf<T>(type, thisRef, scope).instance
+        return newInstanceOf<T>(type, thisRef, scope, pid).instance
     }
 
     /**
@@ -66,18 +66,19 @@ class ComponentMap {
     ): InjectableInstance<T> {
         val klass = type.classifier as KClass<T>
         val args = HashMap<KParameter, Any>()
+        val primaryConstructor = klass.primaryConstructor ?: error("Cannot find a primary constructor on type $type")
 
-        klass.primaryConstructor?.parameters?.forEach {
+        primaryConstructor.parameters.forEach {
             try {
-                args[it] = requestInstance(it.type, thisRef, scope)
+                args[it] = requestInstance(it.type, thisRef, scope, pid)
             } catch (ex: IllegalStateException) {
                 if (!it.isOptional) {
                     throw IllegalStateException("Cannot create a valid instance of type $it", ex)
                 }
             }
-        } ?: error("Cannot find a primary constructor on type $type")
+        }
         val instance = try {
-            klass.createInstance()
+            primaryConstructor.callBy(args)
         } catch (ex: IllegalArgumentException) {
             throw IllegalStateException("Could not create a new instance of type $type", ex)
         }

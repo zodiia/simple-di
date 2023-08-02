@@ -36,6 +36,9 @@ dependencies {
 java {
     withJavadocJar()
     withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 publishing {
@@ -59,6 +62,15 @@ publishing {
                 scm {
                     connection.set("scm:git:git://github.com/zodiia/simple-di.git")
                     url.set("https://github.com/zodiia/simple-di")
+                }
+                developers {
+                    developer {
+                        name.set("Manon Grivot")
+                        email.set("hey@zodiia.moe")
+                        url.set("https://zodiia.moe")
+                        organization.set("Zodiia")
+                        organizationUrl.set("https://zodiia.moe")
+                    }
                 }
             }
 
