@@ -36,5 +36,4 @@ internal class GlobalProvider<in I : Any?, out T : Any>(
         }
         return threadInstances[pid] ?: requestInstance(property.returnType, thisRef, pid)
     }
-
 }

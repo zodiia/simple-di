@@ -24,5 +24,4 @@ internal class InstanceProvider<in I, out T : Any>(
         }
         return componentMap.requestInstance(property.returnType, thisRef, scope)
     }
-
 }

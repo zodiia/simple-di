@@ -8,11 +8,11 @@ import kotlin.reflect.typeOf
 
 class ComponentMapTest {
     interface IFoo {
-        var i: Int
+        var num: Int
     }
 
     class Foo : IFoo {
-        override var i = 0
+        override var num = 0
         val rand = UUID.randomUUID().toString()
     }
 
@@ -30,8 +30,8 @@ class ComponentMapTest {
         val bar = Bar(InjectionScope.REQUEST, componentMap)
 
         Assertions.assertNotEquals(bar.foo.rand, bar.foo.rand)
-        bar.foo.i += 1
-        Assertions.assertEquals(0, bar.foo.i)
+        bar.foo.num += 1
+        Assertions.assertEquals(0, bar.foo.num)
     }
 
     @Test
@@ -42,9 +42,9 @@ class ComponentMapTest {
 
         Assertions.assertEquals(bar1.foo.rand, bar1.foo.rand)
         Assertions.assertNotEquals(bar1.foo.rand, bar2.foo.rand)
-        bar1.foo.i = 1
-        bar2.foo.i = 2
-        Assertions.assertNotEquals(bar1.foo.i, bar2.foo.i)
+        bar1.foo.num = 1
+        bar2.foo.num = 2
+        Assertions.assertNotEquals(bar1.foo.num, bar2.foo.num)
     }
 
     @Test
@@ -55,16 +55,16 @@ class ComponentMapTest {
         var rand: String = bar1.foo.rand
 
         val th1 = Thread {
-            bar1.foo.i = 1
-            bar2.foo.i = 2
+            bar1.foo.num = 1
+            bar2.foo.num = 2
             rand = bar1.foo.rand
-            Assertions.assertEquals(bar1.foo.i, bar2.foo.i)
+            Assertions.assertEquals(bar1.foo.num, bar2.foo.num)
         }
         th1.start()
         th1.join()
 
-        Assertions.assertEquals(0, bar1.foo.i)
-        Assertions.assertEquals(0, bar2.foo.i)
+        Assertions.assertEquals(0, bar1.foo.num)
+        Assertions.assertEquals(0, bar2.foo.num)
         Assertions.assertNotEquals(bar1.foo.rand, rand)
     }
 
@@ -75,10 +75,10 @@ class ComponentMapTest {
         val bar2 = Bar(InjectionScope.RUNTIME, componentMap)
 
         Assertions.assertEquals(bar1.foo.rand, bar2.foo.rand)
-        bar1.foo.i = 1
-        Assertions.assertEquals(1, bar2.foo.i)
-        bar2.foo.i = 2
-        Assertions.assertEquals(2, bar1.foo.i)
+        bar1.foo.num = 1
+        Assertions.assertEquals(1, bar2.foo.num)
+        bar2.foo.num = 2
+        Assertions.assertEquals(2, bar1.foo.num)
     }
 
     @Test
@@ -153,7 +153,7 @@ class ComponentMapTest {
         Assertions.assertThrows(IllegalStateException::class.java) {
             val foo by injection<IFoo>()
 
-            foo.i = 1
+            foo.num = 1
         }
     }
 
@@ -173,7 +173,7 @@ class ComponentMapTest {
         val bar by injection<BarWithOptionalConstructor>(InjectionScope.RUNTIME, componentMap)
 
         Assertions.assertDoesNotThrow {
-            Assertions.assertEquals(0, bar.foo.i)
+            Assertions.assertEquals(0, bar.foo.num)
         }
     }
 
@@ -183,7 +183,7 @@ class ComponentMapTest {
         val bar by injection<BarWithRequiredConstructor>(InjectionScope.RUNTIME, componentMap)
 
         Assertions.assertThrows(IllegalStateException::class.java) {
-            bar.foo.i
+            bar.foo.num
         }
     }
 }
