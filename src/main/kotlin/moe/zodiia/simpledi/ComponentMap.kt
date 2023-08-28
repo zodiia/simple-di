@@ -14,9 +14,10 @@ import kotlin.reflect.full.primaryConstructor
  * A class responsible for holding all injectable instances of classes in the
  * application runtime.
  *
- * Usually, there is only one component map in the application, and you do not
+ * Usually, you only want one component map in the application, and you do not
  * have to manage it. However, you can create multiple component maps and pass
- * them to the [injection] delegate.
+ * them to the [injection] delegate. Use this feature if you know what you're
+ * doing.
  */
 class ComponentMap {
     private val components = HashSet<InjectableInstance<*>>()
@@ -101,7 +102,7 @@ class ComponentMap {
     }
 
     companion object {
-        fun default() = ComponentMap()
+        val default = ComponentMap()
     }
 }
 
@@ -137,11 +138,12 @@ class ComponentMap {
  * @param scope The injection scope. See [InjectionScope]. By default, it will
  * be [InjectionScope.RUNTIME]
  * @param componentMap The component map. See [ComponentMap]. By default, it
- * will be the global one.
+ * will be the global one. You shouldn't use multiple component maps, except
+ * if you know what you're doing.
  */
 fun <T : Any> injection(
     scope: InjectionScope = InjectionScope.RUNTIME,
-    componentMap: ComponentMap = ComponentMap.default(),
+    componentMap: ComponentMap = ComponentMap.default,
 ): ReadOnlyProperty<Any?, T> = when (scope) {
     InjectionScope.RUNTIME, InjectionScope.THREAD -> GlobalProvider(scope, componentMap)
     else -> InstanceProvider(scope, componentMap)
