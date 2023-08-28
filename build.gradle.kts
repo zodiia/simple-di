@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "moe.zodiia"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 description = "Simple dependency injection library for Kotlin (JVM)"
 
 repositories {
@@ -43,7 +43,7 @@ java {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
+        create<MavenPublication>("release") {
             artifactId = rootProject.name
             groupId = rootProject.group.toString()
             version = rootProject.version.toString()
@@ -97,7 +97,9 @@ publishing {
 }
 
 signing {
-    sign(publishing.publications["mavenJava"])
+    useGpgCmd()
+    sign(publishing.publications["release"])
+    sign(configurations.archives.get())
 }
 
 tasks.test {

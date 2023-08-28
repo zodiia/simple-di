@@ -5,8 +5,9 @@ import moe.zodiia.simpledi.InjectionScope
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 import kotlin.reflect.KType
+import kotlin.reflect.full.createType
 
-internal class GlobalProvider<in I, out T : Any>(
+internal class GlobalProvider<in I : Any?, out T : Any>(
     private val scope: InjectionScope,
     private val componentMap: ComponentMap,
 ) : ReadOnlyProperty<I, T> {
@@ -25,10 +26,14 @@ internal class GlobalProvider<in I, out T : Any>(
     }
 
     override fun getValue(thisRef: I, property: KProperty<*>): T {
+        val pid = Thread.currentThread().id
+
+        thisRef?.let {
+            componentMap.addInstance(it, it::class.createType(), scope, if (scope == InjectionScope.THREAD) pid else null)
+        }
         if (scope == InjectionScope.RUNTIME) {
             return instance ?: requestInstance(property.returnType, thisRef)
         }
-        val pid = Thread.currentThread().id
         return threadInstances[pid] ?: requestInstance(property.returnType, thisRef, pid)
     }
 

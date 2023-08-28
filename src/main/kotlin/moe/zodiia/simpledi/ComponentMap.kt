@@ -6,7 +6,6 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
 import kotlin.reflect.KType
-import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.primaryConstructor
 
@@ -28,6 +27,9 @@ class ComponentMap {
      * Note that it will not affect already injected instances, and will only affect RUNTIME and THREAD scopes.
      */
     fun <T : Any> addInstance(instance: T, type: KType, scope: InjectionScope, pid: Long? = null) {
+        if (hasInstanceFor(type, scope, pid)) {
+            return
+        }
         makeInjectable(type, instance, scope, pid)
     }
 
