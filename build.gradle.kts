@@ -55,8 +55,8 @@ publishing {
 
                 licenses {
                     license {
-                        name.set("")
-                        url.set("")
+                        name.set("MIT")
+                        url.set("https://spdx.org/licenses/MIT.html")
                     }
                 }
                 scm {
