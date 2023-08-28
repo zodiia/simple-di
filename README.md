@@ -1,7 +1,5 @@
 # Simple DI
 
-**Warning: currently not yet released to Maven Central. Please stand by while I'm figuring this out.**
-
 A very simple library for dependency injection in Kotlin, using modern Kotlin features. Simple DI is:
 
 - Fast and efficient: it only does what it's supposed to do, without hidden control flows or tricks for supporting
