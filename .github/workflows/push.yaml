@@ -12,6 +12,6 @@ jobs:
       - name: Run Detekt
         run: ./gradlew detekt
       - name: Try to compile
-        run: ./gradlew build
+        run: ./gradlew build -x signArchives
       - name: Run unit tests
         run: ./gradlew test
