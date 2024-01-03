@@ -8,6 +8,7 @@ import kotlin.reflect.KParameter
 import kotlin.reflect.KType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.typeOf
 
 /**
  * A class responsible for holding all injectable instances of classes in the
@@ -15,11 +16,20 @@ import kotlin.reflect.full.primaryConstructor
  *
  * Usually, you only want one component map in the application, and you do not
  * have to manage it. However, you can create multiple component maps and pass
- * them to the [injection] delegate. Use this feature if you know what you're
- * doing.
+ * them to the [injection] delegate. Injection through class constructors will
+ * also use the component map that contains the parent object. Use this feature
+ * if you know what you're doing.
+ *
+ * When trying to use multiple component maps with the [injection] delegate, add
+ * a [ComponentMap] to your constructor to pass the currently used component map
+ * through, making it available for further [injection]s.
  */
 class ComponentMap {
     private val components = HashSet<InjectableInstance<*>>()
+
+    init {
+        addInstance(this, componentMapType, InjectionScope.RUNTIME)
+    }
 
     /**
      * Add an instance to the component map for future injections.
@@ -33,10 +43,19 @@ class ComponentMap {
         makeInjectable(type, instance, scope, pid)
     }
 
+    private fun prepareComponentMapForPid(pid: Long) {
+        if (!hasInstanceFor(componentMapType, InjectionScope.THREAD, pid)) {
+            addInstance(this, componentMapType, InjectionScope.THREAD, pid)
+        }
+    }
+
     /**
      * Request an instance for a given scope and parameters.
      */
     fun <T : Any> requestInstance(type: KType, thisRef: Any?, scope: InjectionScope, pid: Long? = null): T {
+        if (pid != null) {
+            prepareComponentMapForPid(pid)
+        }
         if (scope.global) {
             components.find {
                 try {
@@ -104,6 +123,11 @@ class ComponentMap {
     }
 
     companion object {
+        private val componentMapType = typeOf<ComponentMap>()
+
+        /**
+         * The default [ComponentMap].
+         */
         val default = ComponentMap()
     }
 }
