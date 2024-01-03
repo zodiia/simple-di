@@ -1,0 +1,50 @@
+@startuml
+
+hide empty members
+
+class Application {
+    val globalObject by injection(scope = InjectionScope.RUNTIME)
+}
+class GlobalObject {
+    val threadObject by injection(scope = InjectionScope.THREAD)
+}
+
+Application *-- GlobalObject
+
+package "Thread 0" {
+    class "ThreadObject" as tm0 {
+        val instanceObject by injection(scope = InjectionScope.INSTANCE)
+    }
+    class "InstanceObject" as im0
+    GlobalObject *-- tm0
+    tm0 *-- im0
+}
+
+package "Thread 1" {
+    class "ThreadObject" as tm1 {
+        (...)
+    }
+    class "InstanceObject" as im1
+    GlobalObject *-- tm1
+    tm1 *-- im1
+}
+
+package "Thread 2" {
+    class "ThreadObject" as tm2 {
+        (...)
+    }
+    class "InstanceObject" as im2
+    GlobalObject *-- tm2
+    tm2 *-- im2
+}
+
+package "Thread 3" {
+    class "ThreadObject" as tm3 {
+        (...)
+    }
+    class "InstanceObject" as im3
+    GlobalObject *-- tm3
+    tm3 *-- im3
+}
+
+@enduml
