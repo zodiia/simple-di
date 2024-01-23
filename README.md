@@ -18,20 +18,20 @@ Simple DI is available on Maven Central. Add the dependency to your project:
 **Gradle Kotlin**
 
 ```kt
-implementation("moe.zodiia:simple-di:<latest version>")
+implementation("dev.zodiia:simple-di:<latest version>")
 ```
 
 **Gradle Groovy**
 
 ```groovy
-implementation 'moe.zodiia:simple-di:<latest version>'
+implementation 'dev.zodiia:simple-di:<latest version>'
 ```
 
 **Maven**
 
 ```xml
 <dependency>
-  <groupId>moe.zodiia</groupId>
+  <groupId>dev.zodiia</groupId>
   <artifactId>simple-di</artifactId>
   <version>latest version</version>
 </dependency>
@@ -42,7 +42,7 @@ implementation 'moe.zodiia:simple-di:<latest version>'
 To start injecting classes, simply use delegated properties with the `injection` method:
 
 ```kt
-import moe.zodiia.simpledi.injection
+import dev.zodiia.simpledi.injection
 
 class Foo {
   fun doSomething() {

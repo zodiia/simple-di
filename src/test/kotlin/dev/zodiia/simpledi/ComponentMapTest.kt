@@ -1,4 +1,4 @@
-package moe.zodiia.simpledi
+package dev.zodiia.simpledi
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

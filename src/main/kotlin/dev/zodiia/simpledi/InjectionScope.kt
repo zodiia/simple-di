@@ -1,4 +1,4 @@
-package moe.zodiia.simpledi
+package dev.zodiia.simpledi
 
 /**
  * Defines the scope of the injected instance, where it will be shared with other classes.

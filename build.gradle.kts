@@ -8,7 +8,7 @@ plugins {
     signing
 }
 
-group = "moe.zodiia"
+group = "dev.zodiia"
 version = "1.0.0"
 description = "Simple dependency injection library for Kotlin (JVM)"
 
@@ -66,10 +66,10 @@ publishing {
                 developers {
                     developer {
                         name.set("Manon Grivot")
-                        email.set("hey@zodiia.moe")
-                        url.set("https://zodiia.moe")
+                        email.set("hey@manongrivot.me")
+                        url.set("https://manongrivot.me")
                         organization.set("Zodiia")
-                        organizationUrl.set("https://zodiia.moe")
+                        organizationUrl.set("https://zodiia.dev")
                     }
                 }
             }
