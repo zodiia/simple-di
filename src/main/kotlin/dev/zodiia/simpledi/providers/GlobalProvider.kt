@@ -1,7 +1,7 @@
-package moe.zodiia.simpledi.providers
+package dev.zodiia.simpledi.providers
 
-import moe.zodiia.simpledi.ComponentMap
-import moe.zodiia.simpledi.InjectionScope
+import dev.zodiia.simpledi.ComponentMap
+import dev.zodiia.simpledi.InjectionScope
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 import kotlin.reflect.KType

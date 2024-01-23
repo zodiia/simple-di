@@ -1,4 +1,4 @@
-package moe.zodiia.simpledi
+package dev.zodiia.simpledi
 
 import kotlin.reflect.KType
 

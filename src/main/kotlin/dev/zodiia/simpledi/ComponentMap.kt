@@ -1,7 +1,7 @@
-package moe.zodiia.simpledi
+package dev.zodiia.simpledi
 
-import moe.zodiia.simpledi.providers.GlobalProvider
-import moe.zodiia.simpledi.providers.InstanceProvider
+import dev.zodiia.simpledi.providers.GlobalProvider
+import dev.zodiia.simpledi.providers.InstanceProvider
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
