@@ -24,6 +24,12 @@ class ComponentMapTest {
     class BarWithOptionalConstructor(val foo: IFoo = Foo())
     class BarWithRequiredConstructor(val foo: IFoo)
 
+    class BarWithInjectedComponentMap(val componentMap: ComponentMap) {
+        val foo by injection<Foo>(InjectionScope.RUNTIME, componentMap)
+        val threadFoo by injection<Foo>(InjectionScope.THREAD, componentMap)
+        val threadComponentMap by injection<ComponentMap>(InjectionScope.THREAD, componentMap)
+    }
+
     @Test
     fun `Test request scope`() {
         val componentMap = ComponentMap()
@@ -52,7 +58,7 @@ class ComponentMapTest {
         val componentMap = ComponentMap()
         val bar1 = Bar(InjectionScope.THREAD, componentMap)
         val bar2 = Bar(InjectionScope.THREAD, componentMap)
-        var rand: String = bar1.foo.rand
+        var rand = bar1.foo.rand
 
         val th1 = Thread {
             bar1.foo.num = 1
@@ -150,8 +156,10 @@ class ComponentMapTest {
 
     @Test
     fun `Test injecting invalid types`() {
+        val componentMap = ComponentMap()
+
         Assertions.assertThrows(IllegalStateException::class.java) {
-            val foo by injection<IFoo>()
+            val foo by injection<IFoo>(componentMap = componentMap)
 
             foo.num = 1
         }
@@ -185,5 +193,31 @@ class ComponentMapTest {
         Assertions.assertThrows(IllegalStateException::class.java) {
             bar.foo.num
         }
+    }
+
+    @Test
+    fun `Test component map injection`() {
+        val componentMap = ComponentMap()
+        val bar by injection<BarWithInjectedComponentMap>(componentMap = componentMap)
+
+        Assertions.assertEquals(0, bar.foo.num)
+        Assertions.assertTrue(componentMap.hasInstanceFor(typeOf<ComponentMap>(), InjectionScope.RUNTIME))
+        Assertions.assertEquals(componentMap, bar.componentMap)
+    }
+
+    @Test
+    fun `Test component map injection in threads`() {
+        val componentMap = ComponentMap()
+        val bar by injection<BarWithInjectedComponentMap>(componentMap = componentMap)
+
+        val thread = Thread {
+            bar.threadFoo.num = 1
+        }
+        thread.start()
+        thread.join()
+
+        Assertions.assertEquals(0, bar.threadFoo.num)
+        Assertions.assertTrue(componentMap.hasInstanceFor(typeOf<ComponentMap>(), InjectionScope.THREAD, thread.id))
+        Assertions.assertEquals(componentMap, bar.threadComponentMap)
     }
 }

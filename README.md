@@ -2,11 +2,13 @@
 
 A very simple library for dependency injection in Kotlin, using modern Kotlin features. Simple DI is:
 
-- Fast and efficient: it only does what it's supposed to do, without hidden control flows or tricks for supporting
+- **Fast and efficient**: it only does what it's supposed to do, without hidden control flows or tricks for supporting
   features you won't ever use
-- Elegant: inject what you need using Kotlin's delegated properties or constructors, without using ugly annotations
+- **Elegant**: inject what you need using Kotlin's delegated properties or constructors, without using ugly annotations
   everywhere
-- Usable: it supports circular dependencies and multiple scopes of dependency injection (see below)
+- **Usable**: it supports circular dependencies and multiple scopes of dependency injection (see below)
+- **Easy to integrate**: simple DI comes with no extra dependency, which makes it extremely easy to integrate into any
+  project, new or existing
 
 ## Installation
 
@@ -18,13 +20,13 @@ Simple DI is available on Maven Central. Add the dependency to your project:
 **Gradle Kotlin**
 
 ```kt
-implementation("dev.zodiia:simple-di:<latest version>")
+implementation("dev.zodiia:simple-di:1.1.0")
 ```
 
 **Gradle Groovy**
 
 ```groovy
-implementation 'dev.zodiia:simple-di:<latest version>'
+implementation 'dev.zodiia:simple-di:1.1.0'
 ```
 
 **Maven**
@@ -33,7 +35,7 @@ implementation 'dev.zodiia:simple-di:<latest version>'
 <dependency>
   <groupId>dev.zodiia</groupId>
   <artifactId>simple-di</artifactId>
-  <version>latest version</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
@@ -144,6 +146,13 @@ If you do not provide any scope, the `RUNTIME` scope is used.
 When injecting constructor parameters, the same scope as the one used to request the instance currently being
 constructed will be used.
 
+Here is a diagram explaining the different scope levels (excluding REQUEST, as its instance is never actually stored):
+
+![injection patterns diagram](./docs/injection-pattern.svg)
+
+In this example, `ThreadObject` could actually use the THREAD scope as well to inject `InstanceObject`, although in
+other cases the result will be different.
+
 #### Runtime (`InjectionScope.RUNTIME`)
 
 It will only ever inject one and only one instance of the requested type, for all classes requesting it.
@@ -245,6 +254,27 @@ fun main() {
   // ...
 }
 ```
+
+### Multiple `ComponentMap`s
+
+`ComponentMap`s are the main entry points for each injection request which scope is either RUNTIME or THREAD. It also
+stores all component instances (hence its name) in the different scopes. An advanced use case could require the use of
+different `ComponentMap`s in different context. This can be achieved pretty easily.
+
+When injecting through class constructors, the same `ComponentMap` will be used for injecting the constructor
+parameters, you do not need to do any additional work here.
+
+When injecting using the `injection` delegated property, the method takes as second parameter a `ComponentMap`, which,
+when specified, will be used for the injection instead of the global one. You can also retrieve the current
+`ComponentMap` in which the current instance is by adding it to your constructor. For example:
+
+```kt
+class Foo(componentMap: ComponentMap) {
+    val bar by injection(componentMap = componentMap)
+}
+```
+
+In this example, `bar` will be injected using the same `ComponentMap` that was used to inject `Foo` in the first place.
 
 ## Getting help
 
