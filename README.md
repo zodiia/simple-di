@@ -20,13 +20,13 @@ Simple DI is available on Maven Central. Add the dependency to your project:
 **Gradle Kotlin**
 
 ```kt
-implementation("dev.zodiia:simple-di:1.0.0")
+implementation("dev.zodiia:simple-di:1.1.0")
 ```
 
 **Gradle Groovy**
 
 ```groovy
-implementation 'dev.zodiia:simple-di:1.0.0'
+implementation 'dev.zodiia:simple-di:1.1.0'
 ```
 
 **Maven**
@@ -35,7 +35,7 @@ implementation 'dev.zodiia:simple-di:1.0.0'
 <dependency>
   <groupId>dev.zodiia</groupId>
   <artifactId>simple-di</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 

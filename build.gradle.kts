@@ -2,14 +2,14 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.22"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     `maven-publish`
     signing
 }
 
 group = "dev.zodiia"
-version = "1.0.1"
+version = "1.1.0"
 description = "Simple dependency injection library for Kotlin (JVM)"
 
 repositories {
