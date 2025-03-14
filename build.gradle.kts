@@ -1,15 +1,16 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.22"
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    kotlin("jvm") version "2.1.10"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
     `maven-publish`
     signing
 }
 
 group = "dev.zodiia"
-version = "1.1.0"
+version = "1.1.1"
 description = "Simple dependency injection library for Kotlin (JVM)"
 
 repositories {
@@ -17,12 +18,12 @@ repositories {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt", "detekt-formatting", "1.22.0")
+    detektPlugins("io.gitlab.arturbosch.detekt", "detekt-formatting", "1.23.8")
 }
 
 detekt {
     parallel = true
-    config = files("./detekt.yml")
+    config.setFrom(files("./detekt.yml"))
     buildUponDefaultConfig = true
 }
 
@@ -31,6 +32,12 @@ dependencies {
     implementation(kotlin("reflect"))
 
     testImplementation(kotlin("test"))
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+    }
 }
 
 java {
@@ -112,10 +119,6 @@ signing {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 tasks.withType<Detekt> {
